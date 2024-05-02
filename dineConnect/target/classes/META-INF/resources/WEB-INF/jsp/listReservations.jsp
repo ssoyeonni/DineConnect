@@ -74,7 +74,7 @@
             </tr>
             </tbody>
         </table>
-        <button type="submit">예약하기</button>
+        <button type="submit" onclick="reserBtn()">예약하기</button>
         </div>
 
     </form>
@@ -108,6 +108,12 @@
     });
     function selectTime(time) {
         document.getElementById('selectedTime').value = time;
+    }
+    function reserBtn() {
+        var date = $('#date').val();
+        var time = $('#selectedTime').val();
+        alert(date + " " + time + " 예약되었습니다.");
+        return false;
     }
 </script>
 
