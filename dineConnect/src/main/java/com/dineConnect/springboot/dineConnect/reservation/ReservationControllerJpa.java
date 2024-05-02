@@ -59,6 +59,17 @@ public class ReservationControllerJpa {
 		return "selectTime";
 	}
 
+	// 예약하기 버튼 누르면 선택한 날짜, 시간 받음
+	@RequestMapping(value="make-reservation", method=RequestMethod.GET)
+	public String makeReservation(@RequestParam("date") String date,
+								  @RequestParam("time") String time) {
+		// date와 time 파라미터를 이용한 처리 로직 구현
+		System.out.println("예약 날짜: " + date + ", 예약 시간: " + time);
+		// 처리 후 리다이렉트할 페이지 경로 반환
+		return "redirect:/";
+	}
+
+
 	// 예약하기 버튼을 누르면 username, date, time 저장하도록
 	@RequestMapping("submit")
 	public String submit(@RequestParam String username, @RequestParam LocalDate date,
