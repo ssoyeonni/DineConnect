@@ -36,19 +36,18 @@ public class ReservationController {
 		return "listReservations";
 	}
 	//GET
-	@RequestMapping(value="select-time", method=RequestMethod.GET)
-	public String showtimeReservationPage(
-//			@RequestParam("date") @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate date,
-//			@RequestParam("time") LocalTime time) {
-		// ISO타입으로 날짜를 받음(YYYY-MM-DD)
-		// 시간을 int 타입으로 받아서 1시간 단위 예약
-		//구문을 새 지역 변수에 지정을 선택
-		@RequestParam("time") LocalTime time) {
-
-
-
-		return "selectTime";
-	}
+//	@RequestMapping(value="select-time", method=RequestMethod.GET)
+//	public String showtimeReservationPage(
+////			@RequestParam("date") @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate date,
+////			@RequestParam("time") LocalTime time) {
+//		// ISO타입으로 날짜를 받음(YYYY-MM-DD)
+//		// 시간을 int 타입으로 받아서 1시간 단위 예약
+//		//구문을 새 지역 변수에 지정을 선택
+//		@RequestParam("time") LocalTime time) {
+//
+//
+//		return "selectTime";
+//	}
 
 	@RequestMapping("submit")
 	public String submit(@RequestParam String username, ModelMap model) {

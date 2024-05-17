@@ -70,21 +70,21 @@ public class ReservationControllerJpa {
 	}
 
 
-	// 예약하기 버튼을 누르면 username, date, time 저장하도록
-	@RequestMapping("submit")
-	public String submit(@RequestParam String username, @RequestParam LocalDate date,
-						 @RequestParam LocalTime time, ModelMap model) {
-		Reservation newReservation = new Reservation();
-		newReservation.setUsername(username);
-		newReservation.setDate(date);
-		newReservation.setTime(time);
-		reservationService.save(newReservation);
-
-		List<Reservation> reservations = reservationService.findByUsername(username);
-		model.addAttribute("reservations", reservations);
-
-		return "listReservations";
-	}
+//	// 예약하기 버튼을 누르면 username, date, time 저장하도록
+//	@RequestMapping("submit")
+//	public String submit(@RequestParam String username, @RequestParam LocalDate date,
+//						 @RequestParam LocalTime time, ModelMap model) {
+//		Reservation newReservation = new Reservation();
+//		newReservation.setUsername(username);
+//		newReservation.setDate(date);
+//		newReservation.setTime(time);
+//		reservationService.save(newReservation);
+//
+//		List<Reservation> reservations = reservationService.findByUsername(username);
+//		model.addAttribute("reservations", reservations);
+//
+//		return "listReservations";
+//	}
 
 	// 버튼에서 날짜 받아와서 위 데이터베이스 저장에 연결(시간은 아직 구현x)
 //	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

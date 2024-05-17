@@ -14,7 +14,13 @@
 		<h1>소개, 사진 등</h1>
 		
 		<div>
-			<a href="list-reservations">예약하기</a> 
+			<a href="list-reservations">예약하기</a>
+		</div>
+		<div>
+			<a href="chat-room">상담하기</a>
+		</div>
+		<div>
+			<a href="chat-room-manager">관리자용 상담창</a>
 		</div>
 		
 		
