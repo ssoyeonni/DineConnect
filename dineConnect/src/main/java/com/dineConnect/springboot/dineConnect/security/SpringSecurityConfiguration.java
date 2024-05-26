@@ -5,6 +5,7 @@ import java.util.function.Function;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,9 +28,12 @@ public class SpringSecurityConfiguration {
 		 
 		 UserDetails userDetails1 = createNewUser("in28minutes", "dummy");
 		 UserDetails userDetails2 = createNewUser("ranga", "dummydummy");
-		 
-		 return new InMemoryUserDetailsManager(userDetails1, userDetails2);
+		 UserDetails managerDetails1 = createNewManager("soyeon", "1234");
+
+		return new InMemoryUserDetailsManager(userDetails1, userDetails2, managerDetails1);
 	}
+
+
 
 	private UserDetails createNewUser(String username, String password) {
 		Function<String, String> passwordEncoder
@@ -42,6 +46,19 @@ public class SpringSecurityConfiguration {
 						 .roles("USER", "ADMIN")
 						 .build();
 		return userDetails;
+	}
+
+	private UserDetails createNewManager(String managername, String password) {
+		Function<String, String> passwordEncoder
+				= input -> passwordEncoder().encode(input);
+
+		UserDetails managerDetails = User.builder()
+				.passwordEncoder(passwordEncoder)
+				.username(managername)
+				.password(password)
+				.roles("MANAGER", "ADMIN")
+				.build();
+		return managerDetails;
 	}
 	
 	@Bean
@@ -58,10 +75,10 @@ public class SpringSecurityConfiguration {
 		http.authorizeHttpRequests(
 				auth -> auth.anyRequest().authenticated());
 		http.formLogin(withDefaults());
-		
-		http.csrf().disable();
-		http.headers().frameOptions().disable();
-		
+
+		http.csrf(AbstractHttpConfigurer::disable);
+		http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
+
 		return http.build();
 	}
 	

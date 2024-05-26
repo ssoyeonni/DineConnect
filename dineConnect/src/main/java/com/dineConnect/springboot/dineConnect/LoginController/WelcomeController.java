@@ -26,6 +26,9 @@ public class WelcomeController {
     	return authentication.getName();
     	
     }
+
+
+
 	/**
 	private AuthenticationService authenticationService;
 	//생성자 만들기

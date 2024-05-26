@@ -17,10 +17,10 @@
 			<a href="list-reservations">예약하기</a>
 		</div>
 		<div>
-			<a href="chat-room">상담하기</a>
+			<a href="chat">상담하기</a>
 		</div>
 		<div>
-			<a href="chat-room-manager">관리자용 상담창</a>
+			<a href="chat-room">관리자용 상담창</a>
 		</div>
 		
 		
