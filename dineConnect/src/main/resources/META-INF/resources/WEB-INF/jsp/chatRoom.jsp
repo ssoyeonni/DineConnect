@@ -19,8 +19,8 @@
         .container h1{
             text-align: left;
             padding: 5px 5px 5px 15px;
-            color: #FFBB00;
-            border-left: 3px solid #FFBB00;
+            color: #000000;
+            border-left: 3px solid #000000;
             margin-bottom: 20px;
         }
         .roomContainer{
@@ -33,15 +33,19 @@
             border: none;
         }
         .roomList th{
-            border: 1px solid #FFBB00;
+            /*border: 1px solid #FFBB00;*/
+            border: 1px solid #000000;
             background-color: #fff;
-            color: #FFBB00;
+            /*color: #FFBB00;*/
+            color: #000000;
         }
         .roomList td{
-            border: 1px solid #FFBB00;
+            /*border: 1px solid #FFBB00;*/
+            border: 1px solid #000000;
             background-color: #fff;
             text-align: left;
-            color: #FFBB00;
+            /*color: #FFBB00;*/
+            color: #000000;
         }
         .roomList .num{
             width: 75px;
@@ -55,7 +59,7 @@
             text-align: center;
         }
         button{
-            background-color: #FFBB00;
+            background-color: #FFFFFF;
             font-size: 14px;
             color: #000;
             border: 1px solid #000;
@@ -104,12 +108,14 @@
 
     function createChatingRoom(res){
         if(res != null){
-            var tag = "<tr><th class='num'>순서</th><th class='room'>방 이름</th><th class='go'></th></tr>";
+            var tag = "<tr>" +
+                // "<th class='num'>순서</th>" +
+                "<th class='room'>방 이름</th><th class='go'></th></tr>";
             res.forEach(function(d, idx){
                 var rn = d.roomName.trim();
                 var roomNumber = d.roomNumber;
                 tag += "<tr>"+
-                    "<td class='num'>"+(idx+1)+"</td>"+
+                    // "<td class='num'>"+(idx+1)+"</td>"+
                     "<td class='room'>"+ rn +"</td>"+
                     "<td class='go'><button type='button' onclick='goRoom(\""+roomNumber+"\", \""+rn+"\")'>참여</button></td>" +
                     "</tr>";
