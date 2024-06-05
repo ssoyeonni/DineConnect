@@ -4,6 +4,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -26,6 +27,15 @@ public class WelcomeController {
     	return authentication.getName();
     	
     }
+//	@GetMapping("/login")
+//	public String login() {
+//		return "login_form";
+//	}
+	@RequestMapping(value="login", method = RequestMethod.GET) //~~login?name=Ranga //요청에서 나온 name이 변수에 연계
+	public String login() {
+		//login.jsp로 리디렉션!
+		return "login_form";
+	}
 
 
 

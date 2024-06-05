@@ -10,7 +10,7 @@
     <div class="my-3 border-bottom">
         <h4>회원가입</h4>
     </div>
-    <form:form action="/sign/signup" method="post">
+    <form:form action="/sign/signup" method="post" modelAttribute="signupForm">
         <div class="mb-3">
             <label for="username" class="form-label">사용자ID</label>
             <form:input path="username" type="text" class="form-control" id="username"/>

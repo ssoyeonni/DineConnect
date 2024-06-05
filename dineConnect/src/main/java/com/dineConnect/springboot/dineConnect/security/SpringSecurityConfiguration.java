@@ -12,6 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration  //spring bean을 만들고 리턴
@@ -38,7 +40,7 @@ public class SpringSecurityConfiguration {
 	private UserDetails createNewUser(String username, String password) {
 		Function<String, String> passwordEncoder
 		 	= input -> passwordEncoder().encode(input);
-		
+
 		UserDetails userDetails = User.builder()
 				 		.passwordEncoder(passwordEncoder)
 						 .username(username)
@@ -60,7 +62,7 @@ public class SpringSecurityConfiguration {
 				.build();
 		return managerDetails;
 	}
-	
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -69,24 +71,59 @@ public class SpringSecurityConfiguration {
 	//All URLs are proteted
 	//A login form is shown for unauthorized requests
 	//CSRF disable, Frames
-	
+
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(
-				auth -> auth.anyRequest().authenticated());
+				auth -> auth.requestMatchers("/","/login", "/sign/signup").permitAll()
+							.anyRequest().authenticated());
 		http.formLogin(withDefaults());
+//		http.formLogin(form -> form
+//				.loginPage("/login")
+//				.defaultSuccessUrl("/")
+//				.failureUrl("/login")
+//				.permitAll()
+//		);
+//		http
+//				.authorizeHttpRequests((authorizeRequests) ->
+//				authorizeRequests
+//						.requestMatchers("/", "/login/**","/login", "/sign/signup").permitAll()
+//						.anyRequest().authenticated()
+//		)
+//
+//				.formLogin((formLogin) ->
+//						formLogin
+//								.loginPage("/login")
+//								.usernameParameter("username")
+//								.passwordParameter("password")
+//								.defaultSuccessUrl("/", true)
+//				);
 
-		http.csrf(AbstractHttpConfigurer::disable);
+
+		http.csrf(csrf -> csrf.disable());
 		http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
 
 		return http.build();
 	}
 
 
-	
-	
-	
-	
-	
-	
+//
+//	@Bean
+//	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//		http.authorizeHttpRequests(
+//				auth -> auth
+//						.requestMatchers("/", "/sign/signup").permitAll()
+//						.anyRequest().authenticated()
+//		);
+//		http.formLogin(
+//				formLogin -> formLogin
+//						.loginPage("/login")
+//						.permitAll()
+//		);
+//
+//		http.csrf(AbstractHttpConfigurer::disable);
+//		http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
+//		return http.build();
+//	}
+
 }
