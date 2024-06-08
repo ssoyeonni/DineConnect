@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +16,6 @@
     <br>
     <button type="submit">로그인</button>
 </form>
-<a href="/signup">회원가입</a>
+<a href="/sign/signup">회원가입</a>
 </body>
 </html>

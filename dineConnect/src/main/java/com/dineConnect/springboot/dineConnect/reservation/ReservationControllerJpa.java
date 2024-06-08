@@ -3,110 +3,119 @@ package com.dineConnect.springboot.dineConnect.reservation;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
 
 @Controller
 @SessionAttributes("name")
 public class ReservationControllerJpa {
-	
-	//ReservationService 이용!
-	
-	
-	
 
-	//생성자 -> 자동으로 결합됨
-	//reservationService를 사용해 Reservation 리스트를 받을 수 있다
+	private final ReservationService reservationService;
+	private final ReservationRepository reservationRepository;
+
 	public ReservationControllerJpa(ReservationService reservationService, ReservationRepository reservationRepository) {
-		super();
 		this.reservationService = reservationService;
 		this.reservationRepository = reservationRepository;
 	}
-	
-	private ReservationService reservationService;
-	
-	//인스턴스 생성
-	
-	private ReservationRepository reservationRepository;
-	
-	
 
 	@RequestMapping("list-reservations")
 	public String listAllReservations(ModelMap model) {
-		String username = (String)model.get("name");
-		//1번 가져
-		reservationRepository.getById(1);
-		
-		//구문을 새 지역 변수에 지정을 선택
+		String username = (String) model.get("name");
 		List<Reservation> reservations = reservationRepository.findByUsername(username);
 		model.addAttribute("reservations", reservations);
 		return "listReservations";
 	}
-	//GET
-	@RequestMapping(value="select-time", method=RequestMethod.GET)
+
+	@RequestMapping(value = "select-time", method = RequestMethod.GET)
 	public String showtimeReservationPage() {
-		//구문을 새 지역 변수에 지정을 선택
-		
 		return "selectTime";
 	}
 
-	// 예약하기 버튼 누르면 선택한 날짜, 시간 받음
-	@RequestMapping(value="make-reservation", method=RequestMethod.GET)
+	@RequestMapping(value = "My-Page", method = RequestMethod.GET)
+	public String showMyPage(ModelMap model) {
+		String username = (String) model.get("name");
+		List<Reservation> reservations = reservationRepository.findByUsername(username);
+		model.addAttribute("reservations", reservations);
+		return "myPage";
+	}
+
+	@RequestMapping(value = "make-reservation", method = RequestMethod.GET)
 	public String makeReservation(@RequestParam("date") String date,
 								  @RequestParam("time") String time) {
-		// date와 time 파라미터를 이용한 처리 로직 구현
-		System.out.println("예약 날짜: " + date + ", 예약 시간: " + time);
-		// 처리 후 리다이렉트할 페이지 경로 반환
+		System.out.println("예약 날짜:" + date + ", 예약 시간: " + time);
 		return "redirect:/";
 	}
 
+	@RequestMapping(value = "submit", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<String> submit(@RequestParam(required = false) String username,
+										 @RequestParam(required = false) String selectedDate,
+										 @RequestParam(required = false) String selectedTime,
+										 ModelMap model) {
+		//예외없이
+		if (username == null || username.isEmpty() || selectedDate == null || selectedDate.isEmpty() || selectedTime == null || selectedTime.isEmpty()) {
+			return ResponseEntity.badRequest().body("날짜와 시간을 선택해주세요.");
+		}
 
-//	// 예약하기 버튼을 누르면 username, date, time 저장하도록
-//	@RequestMapping("submit")
-//	public String submit(@RequestParam String username, @RequestParam LocalDate date,
-//						 @RequestParam LocalTime time, ModelMap model) {
-//		Reservation newReservation = new Reservation();
-//		newReservation.setUsername(username);
-//		newReservation.setDate(date);
-//		newReservation.setTime(time);
-//		reservationService.save(newReservation);
-//
-//		List<Reservation> reservations = reservationService.findByUsername(username);
-//		model.addAttribute("reservations", reservations);
-//
-//		return "listReservations";
-//	}
+		try {
+			LocalDate date = LocalDate.parse(selectedDate);
+			LocalTime time = LocalTime.parse(selectedTime);
 
-	// 버튼에서 날짜 받아와서 위 데이터베이스 저장에 연결(시간은 아직 구현x)
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		String dateString = request.getParameter("selectedDate");
-//		LocalDate Date = LocalDate.parse(dateString);
-//
-//		// 여기에서 selectedDate를 사용하여 데이터베이스에 저장하는 로직 추가
-//	}
+			Reservation newReservation = new Reservation();
+			newReservation.setUsername(username);
+			newReservation.setDate(date);
+			newReservation.setTime(time);
+			reservationService.save(newReservation);
 
-
-	/** 임시삭제
-	//POST
-	@RequestMapping(value="select-time", method=RequestMethod.POST)
-	public String NshowtimeReservationPage(@RequestParam String description) {
-		//구문을 새 지역 변수에 지정을 선택
-		reservationService.addReservation(description);
-		return "selectTime";
+			return ResponseEntity.ok(selectedDate + " " + selectedTime + "에 예약되었습니다.");
+		} catch (DateTimeParseException e) { //예외처리
+			return ResponseEntity.badRequest().body("유효한 날짜와 시간을 선택해주세요.");
+		}
 	}
-	*/
-	
-	
-	
-	
-	
+
+	@RequestMapping(value = "get-disabled-times", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> getDisabledTimes(@RequestParam String date) {
+		LocalDate localDate = LocalDate.parse(date);
+		List<Reservation> reservations = reservationRepository.findByDate(localDate);
+		List<String> disabledTimes = reservations.stream()
+				.map(reservation -> reservation.getTime().toString())
+				.collect(Collectors.toList());
+		Map<String, Object> response = new HashMap<>();
+		response.put("disabledTimes", disabledTimes);
+		return response;
+	}
+
+	@RequestMapping(value = "cancel-reservation", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<String> cancelReservation(@RequestParam Long id, ModelMap model) {
+		try {
+			reservationRepository.deleteById(id);
+			String username = (String) model.get("name");
+			List<Reservation> reservations = reservationRepository.findByUsername(username);
+			model.addAttribute("reservations", reservations);
+			return ResponseEntity.ok("예약이 취소되었습니다.");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("예약 취소 중 오류가 발생했습니다.");
+		}
+	}
 }
+

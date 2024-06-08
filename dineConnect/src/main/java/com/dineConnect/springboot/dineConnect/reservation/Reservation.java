@@ -1,40 +1,51 @@
 package com.dineConnect.springboot.dineConnect.reservation;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 //DB에 만들
-@Entity(name="reservation")
+@Entity(name="reservations")
 public class Reservation {
 
 	public Reservation() {
-		
+
 	}
-	
+
 	// Source -> Constructor Using Field
-	public Reservation(int id, String username) {
+	public Reservation(Long id, String username) {
 		super();
 		this.id = id;
 		this.username = username;
 	}
 	@Id
-	@GeneratedValue
-	private int id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
+	@Column(name="username")
+	private String username;
+	@Column(name="date")
+	private LocalDate date;
+	@Column(name="time")
+	private LocalTime time;
+
+	/*
+	private Long id;
 	private String username;
 
 	private LocalDate date;
 	private LocalTime time;
-
+	 */
 	// Source -> Getters and Setters
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getUsername() {
