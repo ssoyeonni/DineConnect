@@ -24,15 +24,6 @@ public class SignupSecurityService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Signup> _singup = this.signupRepository.findByusername(username);
         if (_singup.isEmpty()) {
-            if ("in28minutes".equals(username)) {
-                return createNewUser("in28minutes", "dummy");
-            }
-            if ("ranga".equals(username)) {
-                return createNewUser("ranga", "dummydummy");
-            }
-            if ("1234".equals(username)) {
-                return createNewUser("1234", "1234");
-            }
             throw new UsernameNotFoundException("사용자를 찾을수 없습니다.");
         }
         Signup signup = _singup.get();
