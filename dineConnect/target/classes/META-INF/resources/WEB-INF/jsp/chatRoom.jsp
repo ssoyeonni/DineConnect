@@ -25,27 +25,27 @@
         }
         .roomContainer{
             background-color: #F6F6F6;
-            width: 500px;
-            height: 500px;
+            width: 400px;
+            /*!*height: 700px; */
             overflow: auto;
         }
         .roomList{
-            border: none;
+            /*border-collapse: collapse; !* 테이블의 모든 선을 없앰 *!*/
+        }
+        .roomList th, .roomList td{
+            border: none; /* 각 셀의 경계선을 없앰 */
+            padding: 10px;
         }
         .roomList th{
-            /*border: 1px solid #FFBB00;*/
-            border: 1px solid #000000;
             background-color: #fff;
-            /*color: #FFBB00;*/
             color: #000000;
+            font-size: 18px;
         }
         .roomList td{
-            /*border: 1px solid #FFBB00;*/
-            border: 1px solid #000000;
             background-color: #fff;
             text-align: left;
-            /*color: #FFBB00;*/
             color: #000000;
+            font-size: 18px
         }
         .roomList .num{
             width: 75px;
@@ -53,10 +53,14 @@
         }
         .roomList .room{
             width: 350px;
+            text-align: center; /* 가운데 정렬 */
         }
         .roomList .go{
             width: 71px;
             text-align: center;
+        }
+        .roomList tr{
+            border-bottom: 1px solid #ccc; /* 행 사이에 회색 선 추가 */
         }
         button{
             background-color: #FFFFFF;
@@ -75,6 +79,7 @@
             height: 25px;
         }
     </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
 <script type="text/javascript">
@@ -109,13 +114,11 @@
     function createChatingRoom(res){
         if(res != null){
             var tag = "<tr>" +
-                // "<th class='num'>순서</th>" +
                 "<th class='room'>방 이름</th><th class='go'></th></tr>";
             res.forEach(function(d, idx){
                 var rn = d.roomName.trim();
                 var roomNumber = d.roomNumber;
                 tag += "<tr>"+
-                    // "<td class='num'>"+(idx+1)+"</td>"+
                     "<td class='room'>"+ rn +"</td>"+
                     "<td class='go'><button type='button' onclick='goRoom(\""+roomNumber+"\", \""+rn+"\")'>참여</button></td>" +
                     "</tr>";
@@ -139,8 +142,10 @@
             }
         });
     }
+
 </script>
 <body>
+<%@ include file="common/navigation.jspf"%>
 <div class="container">
     <h1>채팅방</h1>
     <div id="roomContainer" class="roomContainer">
@@ -148,13 +153,14 @@
     </div>
     <div>
         <table class="inputTable">
-            <tr>
-                <th>방 제목</th>
-                <th><input type="text" name="roomName" id="roomName"></th>
-                <th><button id="createRoom">방 만들기</button></th>
-            </tr>
+            <%--            <tr>--%>
+            <%--                <th>방 제목</th>--%>
+            <%--                <th><input type="text" name="roomName" id="roomName"></th>--%>
+            <%--                <th><button id="createRoom">방 만들기</button></th>--%>
+            <%--            </tr>--%>
         </table>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
