@@ -8,10 +8,20 @@
     <meta charset="UTF-8">
     <style>
         body {
-            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp2k74JjxBFS0xi8b_HuH4TLewKbXRcUj-Ow&s');
+            background-image: url('<%= request.getContextPath() %>/images/bar-826687_1280.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
+        }
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* 검은색 투명 레이어 */
+            z-index: -1; /* 배경 위로 위치 */
         }
         .chatting {
             background-color: #F6F6F6;

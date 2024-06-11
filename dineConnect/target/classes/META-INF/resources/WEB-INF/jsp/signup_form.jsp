@@ -7,17 +7,30 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         body {
-            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp2k74JjxBFS0xi8b_HuH4TLewKbXRcUj-Ow&s');
+            background-image: url('<%= request.getContextPath() %>/images/bar-826687_1280.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
+            overflow: hidden;
+            position: relative;
         }
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* 검은색 투명 레이어 */
+            z-index: -1; /* 배경 위로 위치 */
+        }
+
     </style>
 </head>
 <body>
 <%@ include file="common/navigation.jspf"%>
 <div class="d-flex justify-content-center align-items-center vh-100">
-    <div class="container my-3 border p-4 rounded" style="max-width: 300px; background-color: rgba(255, 255, 255, 0.9);">
+    <div class="container my-3 border p-4 rounded" style="max-width: 300px; background-color: rgba(255, 255, 255, 0.9); position: relative; z-index: 1;"> <!-- 컨테이너 위치 조정 -->
         <div class="my-3 border-bottom text-center">
             <h4>회원가입</h4>
         </div>
