@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <meta charset="UTF-8">
     <style>
+        body {
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp2k74JjxBFS0xi8b_HuH4TLewKbXRcUj-Ow&s');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
         .chatting {
             background-color: #F6F6F6;
             width: 500px;
@@ -38,6 +44,7 @@
             margin: 0 auto;
             font-size: 18px;
             text-align: center;
+
         }
 
         .me {
@@ -161,7 +168,7 @@
 <div id="container" class="container" style="position: relative; max-width: 520px; margin: 0 auto;">
 <%--    <h1>${roomName}</h1>--%>
     <%--    <div>${username}님 무엇을 도와드릴까요?</div>--%>
-    <div id ="what">무엇을 도와드릴까요?</div>
+    <div id ="what" style="color : #F6F6F6;">무엇을 도와드릴까요?</div>
     <input type="hidden" id="sessionId" value="">
     <input type="hidden" id="roomNumber" value="${roomNumber}">
 

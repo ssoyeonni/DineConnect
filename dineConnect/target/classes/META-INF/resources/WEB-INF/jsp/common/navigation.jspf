@@ -6,7 +6,7 @@
 				href="/">Home</a></li>
 			<li class="nav-item"><a class="nav-link" href="/My-Page">My
 					Page</a></li>
-			<li class="nav-item"><a class="nav-link" href="/sign/signup">SignUp</a></li>
+			<li class="nav-item"><a class="nav-link" href="/sign/signup">Join</a></li>
 		</ul>
 	</div>
 	<ul class="navbar-nav">

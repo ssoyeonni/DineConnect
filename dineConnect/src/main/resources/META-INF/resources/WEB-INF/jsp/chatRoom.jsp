@@ -7,62 +7,67 @@
     <meta charset="UTF-8">
     <title>Room</title>
     <style>
-        *{
-            margin:0;
-            padding:0;
+        * {
+            margin: 0;
+            padding: 0;
         }
-        .container{
-            width: 500px;
-            margin: 0 auto;
-            padding: 25px
+        body {
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp2k74JjxBFS0xi8b_HuH4TLewKbXRcUj-Ow&s');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
-        .container h1{
+        .container-custom {
+            width: 600px; /* 고정된 크기 */
+            padding: 25px;
+            background-color: rgba(255, 255, 255, 0.8); /* 투명도 추가 */
+            border-radius: 10px;
+        }
+        .container-custom h2 {
             text-align: left;
             padding: 5px 5px 5px 15px;
             color: #000000;
             border-left: 3px solid #000000;
             margin-bottom: 20px;
         }
-        .roomContainer{
+        .roomContainer {
             background-color: #F6F6F6;
             width: 400px;
-            /*!*height: 700px; */
+            margin: 0 auto;
             overflow: auto;
+            border-radius: 10px;
         }
-        .roomList{
-            /*border-collapse: collapse; !* 테이블의 모든 선을 없앰 *!*/
-        }
-        .roomList th, .roomList td{
+        .roomList th, .roomList td {
             border: none; /* 각 셀의 경계선을 없앰 */
             padding: 10px;
         }
-        .roomList th{
+        .roomList th {
             background-color: #fff;
             color: #000000;
             font-size: 18px;
         }
-        .roomList td{
+        .roomList td {
             background-color: #fff;
             text-align: left;
             color: #000000;
-            font-size: 18px
+            font-size: 18px;
         }
-        .roomList .num{
+        .roomList .num {
             width: 75px;
             text-align: center;
         }
-        .roomList .room{
+        .roomList .room {
             width: 350px;
             text-align: center; /* 가운데 정렬 */
         }
-        .roomList .go{
+        .roomList .go {
             width: 71px;
             text-align: center;
         }
-        .roomList tr{
+        .roomList tr {
             border-bottom: 1px solid #ccc; /* 행 사이에 회색 선 추가 */
         }
-        button{
+        button {
             background-color: #FFFFFF;
             font-size: 14px;
             color: #000;
@@ -71,10 +76,10 @@
             padding: 3px;
             margin: 3px;
         }
-        .inputTable th{
+        .inputTable th {
             padding: 5px;
         }
-        .inputTable input{
+        .inputTable input {
             width: 330px;
             height: 25px;
         }
@@ -97,7 +102,7 @@
 
     function createRoom(){
         $("#createRoom").click(function(){
-            var msg = {	roomName : $('#roomName').val()	};
+            var msg = { roomName : $('#roomName').val() };
 
             commonAjax('/createRoom', msg, 'post', function(result){
                 createChatingRoom(result);
@@ -146,19 +151,21 @@
 </script>
 <body>
 <%@ include file="common/navigation.jspf"%>
-<div class="container">
-    <h1>채팅방</h1>
-    <div id="roomContainer" class="roomContainer">
-        <table id="roomList" class="roomList"></table>
-    </div>
-    <div>
-        <table class="inputTable">
-            <%--            <tr>--%>
-            <%--                <th>방 제목</th>--%>
-            <%--                <th><input type="text" name="roomName" id="roomName"></th>--%>
-            <%--                <th><button id="createRoom">방 만들기</button></th>--%>
-            <%--            </tr>--%>
-        </table>
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="container-custom">
+        <h2>채팅방</h2>
+        <div id="roomContainer" class="roomContainer">
+            <table id="roomList" class="roomList"></table>
+        </div>
+        <div>
+            <table class="inputTable">
+                <%--            <tr>--%>
+                <%--                <th>방 제목</th>--%>
+                <%--                <th><input type="text" name="roomName" id="roomName"></th>--%>
+                <%--                <th><button id="createRoom">방 만들기</button></th>--%>
+                <%--            </tr>--%>
+            </table>
+        </div>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

@@ -87,7 +87,7 @@ public class SpringSecurityConfiguration {
 		http.formLogin(withDefaults());
 //		http.formLogin(form -> form
 //				.loginPage("/login")
-//				.defaultSuccessUrl("/")
+//				.defaultSuccessUrl("/", true)
 //				.failureUrl("/login")
 //				.permitAll()
 //		);
